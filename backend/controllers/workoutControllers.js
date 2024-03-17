@@ -47,11 +47,31 @@ const deleteWorkout = async (req, res) => {
 
   res.status(200).json(workout);
 };
+
 // update workout
+const updateWorkout = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such Workout to update" });
+  }
+
+  const workout = await Workout.findByIdAndUpdate(
+    { _id: id },
+    {
+      ...req.body, // whatever the thing that coming from the req body they will spread the properties of the object
+    }
+  );
+  if (!workout) {
+    return res.status(404).json({ error: "No such workout to update" });
+  }
+
+  res.status(200).json(workout);
+};
 
 module.exports = {
   createWorkout,
   getWorkout,
   getWorkouts,
   deleteWorkout,
+  updateWorkout,
 };
