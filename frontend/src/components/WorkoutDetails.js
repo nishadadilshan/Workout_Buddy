@@ -7,19 +7,22 @@ export default function WorkoutDetails({ workout }) {
       style={{
         borderRadius: "8px",
         borderBottom: "1px solid",
-        borderBottomColor: "gray",
+        borderBottomColor: "blue",
       }}
     >
-      <h4>{workout.title}</h4>
-      <p>
-        <strong>Load (Kg):</strong>
+      <h3 style={{ color: "black" }}>{workout.title}</h3>
+      <p style={{ color: "gray" }}>
+        <strong>Load (Kg): </strong>
         {workout.load}
       </p>
-      <p>
-        <strong>Reps:</strong>
+      <p style={{ color: "gray" }}>
+        <strong>Reps: </strong>
         {workout.reps}
       </p>
-      <p>{workout.createdAt}</p>
+      <p style={{ color: "gray" }}>
+        <strong>Created Date: </strong>
+        {workout.createdAt}
+      </p>
     </div>
   );
 }
