@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import WorkoutDetails from "../components/WorkoutDetails";
 import WorkoutForm from "../components/WorkoutForm";
+import { useWorkoutContext } from "../hooks/useWorkoutContext";
 
 export default function Home() {
-  const [workouts, setWorkouts] = useState(null);
-  const [refreshing, setRefreshing] = useState(false);
+  // const [workouts, setWorkouts] = useState(null);
+
+  const { workouts, dispatch } = useWorkoutContext();
 
   useEffect(() => {
     const fetchWorkouts = async () => {
@@ -12,13 +14,12 @@ export default function Home() {
       const json = await response.json();
 
       if (response.ok) {
-        setWorkouts(json);
+        dispatch({ type: "SET_WORKOUTS", payload: json });
         console.log("Workouts --->>", json);
       }
     };
-    setRefreshing(false);
     fetchWorkouts();
-  }, [refreshing]);
+  }, []);
 
   return (
     <div className="home">
@@ -28,7 +29,7 @@ export default function Home() {
             <WorkoutDetails key={workout._id} workout={workout} />
           ))}
       </div>
-      <WorkoutForm setRefreshing={setRefreshing} />
+      <WorkoutForm />
     </div>
   );
 }

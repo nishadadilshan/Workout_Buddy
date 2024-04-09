@@ -1,12 +1,10 @@
 import { useState } from "react";
 
-const WorkoutForm = (props) => {
+const WorkoutForm = () => {
   const [title, setTitle] = useState("");
   const [load, setLoad] = useState("");
   const [reps, setReps] = useState("");
   const [error, setError] = useState(null);
-
-  const setRefreshing = props.setRefreshing;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +26,6 @@ const WorkoutForm = (props) => {
       console.log("Error in adding workout--->>", error);
     }
     if (response.ok) {
-      setRefreshing(true);
       setTitle("");
       setLoad("");
       setReps("");
