@@ -24,12 +24,29 @@ const getWorkout = async (req, res) => {
 // create new workout
 const createWorkout = async (req, res) => {
   const { title, reps, load } = req.body;
-  //add doc to db
-  try {
-    const workout = await Workout.create({ title, reps, load });
-    res.status(200).json(workout);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+
+  let emptyFeild = [];
+  if (!title) {
+    emptyFeild.push("title");
+  }
+  if (!reps) {
+    emptyFeild.push("reps");
+  }
+  if (!load) {
+    emptyFeild.push("load");
+  }
+  if (emptyFeild.length > 0) {
+    res
+      .status(400)
+      .json({ error: "Please fill in all the feilds", emptyFeild });
+  } else {
+    //add doc to db
+    try {
+      const workout = await Workout.create({ title, reps, load });
+      res.status(200).json(workout);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
   }
 };
 
